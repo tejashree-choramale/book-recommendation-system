@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request
 import pickle
+from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
 
 # Load our saved data
 pt = pickle.load(open('data/pt.pkl', 'rb'))
 books = pickle.load(open('data/books.pkl', 'rb'))
+
+similarity = cosine_similarity(pt)
 
 @app.route('/')
 def index():
@@ -41,7 +44,7 @@ def book_detail(book_name):
     recommendations = [] #list to get recs
 
     if exists:
-        recommendations = ["Book A", "Book B", "Book C"]
+        recommendations = get_recommendations(book_name)
 
     return render_template(
         'book.html',
@@ -49,6 +52,20 @@ def book_detail(book_name):
         exists=exists,
         recommendations=recommendations
     )
+
+
+def get_recommendations(book_name):
+    book_index = pt.index.get_loc(book_name)
+
+    scores = list(enumerate(similarity[book_index]))
+
+    scores = sorted(scores, key=lambda x: x[1], reverse=True)
+
+    recommended_books = []
+    for i in scores[1:6]:  # to skip the same book we clicked
+        recommended_books.append(pt.index[i[0]])
+
+    return recommended_books
 
 
 if __name__ == '__main__':
