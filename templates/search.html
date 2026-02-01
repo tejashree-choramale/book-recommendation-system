@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search</title>
+</head>
+
+<body>
+  <h1>Welcome to Search</h1>
+
+  <form action="/search" method="POST">
+    <input type="text" name="user_input" placeholder="Search books">
+    <button type="submit">Search</button>
+  </form>
+  {% if error %}
+  <p style="color:red;">{{ error }}</p>
+  {% endif %}
+
+
+  {%if results %}
+  {% for book in results %}
+  <p>{{ book['Book-Title'] }}</p>
+  <p>{{book['Book-Author']}}</p>
+  <img src="{{ book['Image-URL-L'] }}" alt="image">
+  {% endfor %}
+
+  {% else %}
+    <p>oops! "{{ query }}" Not found</p>
+
+  {% endif %}
+
+</body>
+
+</html>
