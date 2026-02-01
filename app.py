@@ -9,8 +9,7 @@ books = pickle.load(open('data/books.pkl', 'rb'))
 
 @app.route('/')
 def index():
-    # This is for your "Top Picks" landing page
-    # Just show the first 50 books from the master list for now
+# 10 books to show on index page
     return render_template('index.html', 
                            book_name = list(books['Book-Title'].values[:10]),
                            image = list(books['Image-URL-L'].values[:10]))
@@ -27,13 +26,20 @@ def search():
             error="Please enter something to search"
         ) 
 
-    # Use the BIG master list for searching so we don't miss anything!
+    # list of books that contain search results
     search_result = books[books['Book-Title'].str.contains(user_input, case=False , na=False)].head(10) #using head to get top 10 results and NA to handle NA values
     
     search_result = search_result[['Book-Title','Book-Author','Image-URL-L', 'Year-Of-Publication', 'Publisher']].to_dict('records')
 
 
     return render_template('search.html', results=search_result , query=user_input) # sending query back to print it on ui
+
+@app.route('/book/<book_name>')
+def book_detail(book_name):
+    return render_template(
+        'book.html',
+        book_name=book_name
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)

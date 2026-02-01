@@ -21,7 +21,7 @@
 
   {%if results %}
   {% for book in results %}
-  <p>{{ book['Book-Title'] }}</p>
+  <a href="/book/{{ book['Book-Title'] }}">{{ book['Book-Title'] }}</a>
   <p>{{book['Book-Author']}}</p>
   <img src="{{ book['Image-URL-L'] }}" alt="image">
   {% endfor %}
