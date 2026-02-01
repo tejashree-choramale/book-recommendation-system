@@ -36,10 +36,20 @@ def search():
 
 @app.route('/book/<book_name>')
 def book_detail(book_name):
+    exists = book_name in pt.index
+
+    recommendations = [] #list to get recs
+
+    if exists:
+        recommendations = ["Book A", "Book B", "Book C"]
+
     return render_template(
         'book.html',
-        book_name=book_name
+        book_name=book_name,
+        exists=exists,
+        recommendations=recommendations
     )
+
 
 if __name__ == '__main__':
     app.run(debug=True)

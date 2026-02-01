@@ -1,2 +1,12 @@
 <h1>{{ book_name }}</h1>
-<p>This is the book detail page</p>
+
+{%if exists%} 
+<h2>recs books</h2>
+<ul>
+  {% for book in recommendations %}
+    <li>{{book}}</li>
+  {% endfor %}
+  </ul>
+{% else %} 
+  <p>I dont have recs for you</p>
+{% endif %}
