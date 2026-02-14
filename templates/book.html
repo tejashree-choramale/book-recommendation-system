@@ -1,16 +1,19 @@
-<h1>{{ book_name }}</h1>
-<!--
-{%if exists%} 
-  <h2>recs books</h2>
-  <ul>
-    {% for book in recommendations %}
-      <li>{{book}}</li>
-    {% endfor %}
-    </ul>
-{% else %} 
-  <p>I dont have recs for you</p>
+{% if book_details %}
+    <img src="{{ book_details['Image-URL-L'] }}" alt="{{ book_details['Book-Title'] }}">
+    <h1>{{ book_details['Book-Title'] }}</h1>
+    <p><strong>Author:</strong> {{ book_details['Book-Author'] }}</p>
+    <p><strong>Publisher:</strong> {{ book_details['Publisher'] }} ({{ book_details['Year-Of-Publication'] }})</p>
+    
+    {% if book_details['avg_rating'] %}
+        <p><strong>Average Rating:</strong> {{ book_details['avg_rating']| round(1) }}</p>
+        <p><strong>Number of Ratings:</strong> {{ book_details['num_ratings'] }}</p>
+    {% else %}
+        <p>No ratings available</p>
+    {% endif %}
+
+{% else %}
+    <p>Book not found.</p>
 {% endif %}
--->
 
 {% if exists %}
   <h2>Recommended Books</h2>

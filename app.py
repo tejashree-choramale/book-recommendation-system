@@ -6,9 +6,13 @@ import random
 
 app = Flask(__name__)
 
+
+
 # Load our saved data
 pt = pickle.load(open('data/pt.pkl', 'rb'))
 books = pickle.load(open('data/books.pkl', 'rb'))
+
+print(books.columns)
 
 similarity = cosine_similarity(pt)
 
@@ -24,6 +28,9 @@ popularity_df = pd.DataFrame({
     'avg_rating': mean_ratings
 })
 
+print(books.columns)
+print(popularity_df.columns)
+
 popularity_df = popularity_df[popularity_df['num_ratings'] >= 10] # rejecting books with less than 10 ratings
 
 popularity_df['score'] = popularity_df['avg_rating'] * popularity_df['num_ratings']
@@ -37,8 +44,8 @@ popularity_df = popularity_df.merge(
 )
 
 popularity_df = popularity_df.drop_duplicates(subset='Book-Title', keep='first') #dropping duplicates
-
-top_10_popular = popularity_df.head(10)
+print("pop df" ,popularity_df.shape)
+top_10_popular = popularity_df.head(12)
 
 
 @app.route('/')
@@ -89,11 +96,46 @@ def book_detail(book_name):
 
         fallback_books = fallback_books[:8]
 
+    book_details = None
+
+    # Get book info
+    book_row = books[books['Book-Title'] == book_name]
+
+    if not book_row.empty:
+        book_data = book_row.iloc[0]
+
+        # Default ratings
+        avg_rating = None
+        num_ratings = None
+
+        # Checking if info is present or not
+        rating_row = popularity_df[popularity_df['Book-Title'] == book_name]
+        if not rating_row.empty:
+            avg_rating = rating_row.iloc[0]['avg_rating']
+            num_ratings = rating_row.iloc[0]['num_ratings']
+        else:
+            avg_rating = None
+            num_ratings = None
+
+        # Combine into one dictionary
+        book_details = {
+            'Book-Title': book_data['Book-Title'],
+            'Book-Author': book_data['Book-Author'],
+            'Image-URL-L': book_data['Image-URL-L'],
+            'Year-Of-Publication': book_data['Year-Of-Publication'],
+            'Publisher': book_data['Publisher'],
+            'avg_rating': avg_rating,
+            'num_ratings': num_ratings
+        }
+
+
     return render_template (
         'book.html',
         book_name=book_name,
         exists=exists,
+        book_details=book_details,
         recommendations=recommendations,
+        
         fallback_books=fallback_books
     )
 

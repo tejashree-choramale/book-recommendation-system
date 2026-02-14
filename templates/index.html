@@ -18,7 +18,9 @@
   {% for book in top_10_popular %}
   <div class="book-card">
     <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}" width="150">
-    <h3>{{ book['Book-Title'] }}</h3>
+    <a href="/book/{{ book['Book-Title'] }}">
+        {{ book['Book-Title'] }}
+    </a>
     <p>by {{ book['Book-Author'] }}</p>
     <p>stars: {{ book['avg_rating'] | round(1) }} ({{ book['num_ratings'] }} ratings)</p>
   </div>
