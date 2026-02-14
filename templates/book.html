@@ -1,12 +1,25 @@
 <h1>{{ book_name }}</h1>
-
+<!--
 {%if exists%} 
-<h2>recs books</h2>
-<ul>
-  {% for book in recommendations %}
-    <li>{{book}}</li>
-  {% endfor %}
-  </ul>
+  <h2>recs books</h2>
+  <ul>
+    {% for book in recommendations %}
+      <li>{{book}}</li>
+    {% endfor %}
+    </ul>
 {% else %} 
   <p>I dont have recs for you</p>
+{% endif %}
+-->
+
+{%if exists%} 
+  <h2>recs books</h2>
+  <ul>
+    {% for book in recommendations %}
+       <a href="/book/{{ book['Book-Title'] }}">{{ book['Book-Title'] }}</a>
+      <p>{{book['Book-Author']}}</p>
+      <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}">
+    {% endfor %}
+{% else %}
+    <p>I dont have recs for you</p>
 {% endif %}

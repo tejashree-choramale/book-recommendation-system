@@ -15,20 +15,19 @@
     <button type="submit">Search</button>
   </form>
   {% if error %}
-  <p style="color:red;">{{ error }}</p>
+    <p style="color:red;">{{ error }}</p>
   {% endif %}
 
 
   {%if results %}
-  {% for book in results %}
-  <a href="/book/{{ book['Book-Title'] }}">{{ book['Book-Title'] }}</a>
-  <p>{{book['Book-Author']}}</p>
-  <img src="{{ book['Image-URL-L'] }}" alt="image">
-  {% endfor %}
+    {% for book in results %}
+      <a href="/book/{{ book['Book-Title'] }}">{{ book['Book-Title'] }}</a>
+      <p>{{book['Book-Author']}}</p>
+      <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}">
+    {% endfor %}
 
   {% else %}
     <p>oops! "{{ query }}" Not found</p>
-
   {% endif %}
 
 </body>

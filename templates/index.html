@@ -13,11 +13,17 @@
         <button type="submit">Search</button>
     </form>
 
-    <div>{% for i in range(book_name|length) %}
-        <h3>{{ book_name[i] }}</h3>
-        <img src="{{ image[i] }}">
-        {% endfor %}
-    </div>
+    <h3>Popular books</h3>
+    <div class="books-container">
+  {% for book in top_10_popular %}
+  <div class="book-card">
+    <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}" width="150">
+    <h3>{{ book['Book-Title'] }}</h3>
+    <p>by {{ book['Book-Author'] }}</p>
+    <p>stars: {{ book['avg_rating'] | round(1) }} ({{ book['num_ratings'] }} ratings)</p>
+  </div>
+  {% endfor %}
+</div>
 </body>
 
 </html>

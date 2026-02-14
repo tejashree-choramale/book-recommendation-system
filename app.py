@@ -1,3 +1,4 @@
+import pandas as pd
 from flask import Flask, render_template, request
 import pickle
 from sklearn.metrics.pairwise import cosine_similarity
@@ -10,12 +11,39 @@ books = pickle.load(open('data/books.pkl', 'rb'))
 
 similarity = cosine_similarity(pt)
 
+# getting top 10 books from dataset
+pt_nonzero = pt.replace(0, pd.NA) #replacing 0 with nan
+
+mean_ratings = pt_nonzero.mean(axis=1)
+
+num_ratings = (pt > 0).sum(axis=1) # getting count of how many users rate the book
+
+popularity_df = pd.DataFrame({
+    'num_ratings': num_ratings,
+    'avg_rating': mean_ratings
+})
+
+popularity_df = popularity_df[popularity_df['num_ratings'] >= 10] # rejecting books with less than 10 ratings
+
+popularity_df['score'] = popularity_df['avg_rating'] * popularity_df['num_ratings']
+
+popularity_df = popularity_df.sort_values(by='score', ascending=False) #sorting from more to less
+
+popularity_df = popularity_df.merge(
+    books[['Book-Title', 'Book-Author', 'Image-URL-L']],
+    left_index=True,
+    right_on='Book-Title'
+)
+
+popularity_df = popularity_df.drop_duplicates(subset='Book-Title', keep='first') #dropping duplicates
+
+top_10_popular = popularity_df.head(10)
+
 @app.route('/')
 def index():
 # 10 books to show on index page
     return render_template('index.html', 
-                           book_name = list(books['Book-Title'].values[:10]),
-                           image = list(books['Image-URL-L'].values[:10]))
+                           top_10_popular=top_10_popular.to_dict(orient='records'))
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -62,8 +90,16 @@ def get_recommendations(book_name):
     scores = sorted(scores, key=lambda x: x[1], reverse=True)
 
     recommended_books = []
-    for i in scores[1:6]:  # to skip the same book we clicked
-        recommended_books.append(pt.index[i[0]])
+    for i in scores[1:6]:  # to skip the same book clicked
+        book_title = pt.index[i[0]]
+
+        book_data = books[books['Book-Title'] == book_title].iloc[0]
+
+        recommended_books.append({
+            'Book-Title': book_data['Book-Title'],
+            'Book-Author': book_data['Book-Author'],
+            'Image-URL-L': book_data['Image-URL-L']
+        })
 
     return recommended_books
 
