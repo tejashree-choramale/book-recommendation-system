@@ -12,14 +12,28 @@
 {% endif %}
 -->
 
-{%if exists%} 
-  <h2>recs books</h2>
-  <ul>
-    {% for book in recommendations %}
-       <a href="/book/{{ book['Book-Title'] }}">{{ book['Book-Title'] }}</a>
-      <p>{{book['Book-Author']}}</p>
-      <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}">
-    {% endfor %}
+{% if exists %}
+  <h2>Recommended Books</h2>
+
+  {% for book in recommendations %}
+    <a href="/book/{{ book['Book-Title'] }}">
+        {{ book['Book-Title'] }}
+    </a>
+
+    <p>{{ book['Book-Author'] }}</p>
+
+    <img src="{{ book['Image-URL-L'] }}" 
+         alt="{{ book['Book-Title'] }}">
+  {% endfor %}
+
 {% else %}
-    <p>I dont have recs for you</p>
+  <h2>You may also like</h2>
+
+        {% for book in fallback_books %}
+            <a href="/book/{{ book['Book-Title'] }}">
+                {{ book['Book-Title'] }}
+            </a>
+            <p>{{ book['Book-Author'] }}</p>
+            <img src="{{ book['Image-URL-L'] }}">
+        {% endfor %}
 {% endif %}

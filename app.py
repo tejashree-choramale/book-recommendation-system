@@ -2,6 +2,7 @@ import pandas as pd
 from flask import Flask, render_template, request
 import pickle
 from sklearn.metrics.pairwise import cosine_similarity
+import random
 
 app = Flask(__name__)
 
@@ -39,6 +40,7 @@ popularity_df = popularity_df.drop_duplicates(subset='Book-Title', keep='first')
 
 top_10_popular = popularity_df.head(10)
 
+
 @app.route('/')
 def index():
 # 10 books to show on index page
@@ -70,15 +72,29 @@ def book_detail(book_name):
     exists = book_name in pt.index
 
     recommendations = [] #list to get recs
+    fallback_books = []
 
     if exists:
         recommendations = get_recommendations(book_name)
 
-    return render_template(
+    # Fallback logic if recs are not prsent
+    if not recommendations:
+        same_author = get_same_author_books(book_name)
+        top_books = top_10_popular.to_dict('records')
+
+        fallback_books = same_author + top_books
+
+        # shuffling for random books
+        random.shuffle(fallback_books)
+
+        fallback_books = fallback_books[:8]
+
+    return render_template (
         'book.html',
         book_name=book_name,
         exists=exists,
-        recommendations=recommendations
+        recommendations=recommendations,
+        fallback_books=fallback_books
     )
 
 
@@ -102,6 +118,20 @@ def get_recommendations(book_name):
         })
 
     return recommended_books
+
+def get_same_author_books(book_name):
+    book_row = books[books['Book-Title'] == book_name]
+
+    if book_row.empty:
+        return []
+
+    author = book_row.iloc[0]['Book-Author']
+
+    author_books = books[(books['Book-Author'] == author) & (books['Book-Title'] != book_name) ]  #getting books of same author
+
+    author_books = author_books.head(10) # first 10
+
+    return author_books.to_dict('records')
 
 
 if __name__ == '__main__':
