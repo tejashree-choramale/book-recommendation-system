@@ -45,7 +45,7 @@ popularity_df = popularity_df.merge(
 
 popularity_df = popularity_df.drop_duplicates(subset='Book-Title', keep='first') #dropping duplicates
 print("pop df" ,popularity_df.shape)
-top_10_popular = popularity_df.head(12)
+top_10_popular = popularity_df.head(15)  #homepage top books
 
 
 @app.route('/')
