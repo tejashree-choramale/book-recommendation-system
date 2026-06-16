@@ -1,0 +1,96 @@
+  .search-header{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px 40px;
+    text-align: center;
+}
+
+.result-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 600;
+
+    margin-bottom: 32px;
+}
+
+.result-title span{
+    color: var(--accent);
+    font-style: italic;
+}
+
+.results-container{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding:0 20px;
+}
+
+.result-card{
+    display: flex;
+    gap: 24px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 20px;
+    transition: all .25s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.result-card:hover{
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+.result-card img{
+    width: 110px;
+    height: 165px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+.book-info{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.book-title{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+    line-height:1.3;
+    color:var(--text-primary);
+}
+.book-author{
+    margin-top:10px;
+    font-size:16px;
+    color:var(--text-secondary);
+}
+.book-year{
+    margin-top:4px;
+    font-size:15px;
+    color:var(--text-secondary);
+}
+
+.empty-state{
+    max-width:600px;
+    margin:0 auto;
+    text-align:center;
+}
+
+.empty-state h2{
+    font-family:'Cormorant Garamond', serif;
+    font-size:48px;
+    margin-bottom:12px;
+}
+
+.empty-state p{
+    color:var(--text-secondary);
+    font-size:17px;
+    margin-bottom:30px;
+}
+
+.empty-state img{
+  height: 260px;
+    opacity:.9;
+}

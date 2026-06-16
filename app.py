@@ -67,7 +67,7 @@ def search():
         ) 
 
     # list of books that contain search results
-    search_result = books[books['Book-Title'].str.contains(user_input, case=False , na=False)].head(10) #using head to get top 10 results and NA to handle NA values
+    search_result = books[books['Book-Title'].str.contains(user_input, case=False , na=False)].head(20) #using head to get top 20 results and NA to handle NA values
     
     search_result = search_result[['Book-Title','Book-Author','Image-URL-L', 'Year-Of-Publication', 'Publisher']].to_dict('records')
 

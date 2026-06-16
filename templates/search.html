@@ -4,31 +4,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/homepage.css">
+  <link rel="stylesheet" href="/static/css/result.css">
   <title>Search</title>
+
 </head>
 
 <body>
-  <h1>Welcome to Search</h1>
+  <div class="navbar">
+    <div class="logo">NEXTREAD</div>
+  </div>
 
-  <form action="/search" method="POST">
-    <input type="text" name="user_input" placeholder="Search books">
-    <button type="submit">Search</button>
-  </form>
-  {% if error %}
-    <p style="color:red;">{{ error }}</p>
-  {% endif %}
+  <div class="search-header">
 
+    <h1 class="result-title">
+      Results for
+      <span>"{{ query }}"</span>
+    </h1>
+    <form action="/search" method="POST">
+      <div class="search-container">
+        <input class="search-bar" value="{{ query }}" type="text" name="user_input" placeholder="Search a book title..">
+        <button class="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" height="30px"
+            viewBox="0 -960 960 960" width="30px" fill="#e3e3e3">
+            <path
+              d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+          </svg></button>
+      </div>
+    </form>
 
+  </div>
   {%if results %}
+  <div class="results-container">
     {% for book in results %}
-      <a href="/book/{{ book['Book-Title'] }}">{{ book['Book-Title'] }}</a>
-      <p>{{book['Book-Author']}}</p>
-      <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}">
+    <div class="results-container">
+
+      <a class="result-card" href="/book/{{ book['Book-Title'] }}">
+
+        <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}">
+
+        <div class="book-info">
+
+          <h2 class="book-title">
+            {{ book['Book-Title'] }}
+          </h2>
+
+          <p class="book-author">
+            {{book['Book-Author']}}
+          </p>
+          <p class="book-year">
+            {{book['Year-Of-Publication']}}
+          </p>
+
+        </div>
+
+      </a>
+    </div>
     {% endfor %}
 
-  {% else %}
-    <p>oops! "{{ query }}" Not found</p>
-  {% endif %}
+    {% else %}
+
+    <div class="empty-state">
+
+      <h2>No books found</h2>
+
+      <p>
+        We couldn't find anything matching
+        <span style="color: var(--accent); font-style: italic;">"{{ query }}"</span>
+      </p>
+      <img src="static/doodle/ReadingSideDoodle.svg">
+    </div>
+    {% endif %}
 
 </body>
 
