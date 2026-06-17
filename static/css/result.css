@@ -42,6 +42,10 @@
     transform: translateY(-3px);
     box-shadow: var(--shadow-md);
 }
+
+.result-card:hover .book-title {
+    color: var(--accent);
+}
 .result-card img{
     width: 110px;
     height: 165px;

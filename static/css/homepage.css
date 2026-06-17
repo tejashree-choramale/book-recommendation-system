@@ -7,7 +7,7 @@
   --text-secondary: #6D6D6D;
 
   --accent: #7A5A3D;
-  ;
+  
   --accent-hover: #755840;
 
   --border: #E7DED6;
@@ -208,12 +208,17 @@ body {
   transform: translateY(-6px);
 }
 
+
 .book-title {
   margin-top: 14px;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   line-height: 1.4;
   color: var(--text-primary);
+}
+
+.book:hover .book-title {
+    color: var(--accent);
 }
 
 .book-author {
@@ -248,4 +253,14 @@ body {
   height: 1px;
   background: var(--border);
   margin: 0 auto 10px;
+}
+
+.book img,
+.book-cover img,
+.result-card img{
+    border: 1px solid rgba(0,0,0,.06);
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.04),
+        0 12px 24px rgba(0,0,0,.06);
 }

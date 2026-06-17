@@ -111,7 +111,7 @@ def book_detail(book_name):
         # Checking if info is present or not
         rating_row = popularity_df[popularity_df['Book-Title'] == book_name]
         if not rating_row.empty:
-            avg_rating = rating_row.iloc[0]['avg_rating']
+            avg_rating = (rating_row.iloc[0]['avg_rating']) / 2
             num_ratings = rating_row.iloc[0]['num_ratings']
         else:
             avg_rating = None

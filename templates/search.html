@@ -45,7 +45,9 @@
 
       <a class="result-card" href="/book/{{ book['Book-Title'] }}">
 
-        <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}">
+        <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}"
+          onerror="this.src='/static/images/fallback-book.png'"
+          onload="if(this.naturalWidth < 20) this.src='/static/images/fallback-book.png'">
 
         <div class="book-info">
 

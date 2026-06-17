@@ -1,42 +1,151 @@
-{% if book_details %}
-    <img src="{{ book_details['Image-URL-L'] }}" alt="{{ book_details['Book-Title'] }}">
-    <h1>{{ book_details['Book-Title'] }}</h1>
-    <p><strong>Author:</strong> {{ book_details['Book-Author'] }}</p>
-    <p><strong>Publisher:</strong> {{ book_details['Publisher'] }} ({{ book_details['Year-Of-Publication'] }})</p>
-    
-    {% if book_details['avg_rating'] %}
-        <p><strong>Average Rating:</strong> {{ book_details['avg_rating']| round(1) }}</p>
-        <p><strong>Number of Ratings:</strong> {{ book_details['num_ratings'] }}</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/homepage.css">
+    <link rel="stylesheet" href="/static/css/recommendation.css">
+
+    <title>Book Description</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">NEXTREAD</div>
+    </div>
+    {% if book_details %}
+    <div class="book-hero">
+
+        <div class="book-cover">
+            <img src="{{ book_details['Image-URL-L'] }}" alt="{{ book_details['Book-Title'] }}"
+                onerror="this.src='/static/images/fallback-book.png'"
+                onload="if(this.naturalWidth < 20) this.src='/static/images/fallback-book.png'">
+        </div>
+
+        <div class="book-meta">
+
+            <h1 class="book-heading">
+                {{ book_details['Book-Title'] }}
+            </h1>
+            <p class="author">
+                by {{ book_details['Book-Author'] }}
+            </p>
+
+
+            {% if book_details['avg_rating'] %}
+            <div class="rating-row">
+                <div class="stars">
+
+                    {% set rating = book_details['avg_rating']|round|int %}
+
+                    {% for i in range(rating) %}
+                    ★
+                    {% endfor %}
+
+                    {% for i in range(5-rating) %}
+                    ☆
+                    {% endfor %}
+
+                </div>
+
+                <span class="rating-number">
+                    {{ book_details['avg_rating']|round(1) }}
+                </span>
+
+                <span class="rating-count">
+                    {{ book_details['num_ratings'] }} ratings
+                </span>
+            </div>
+            {% else %}
+            <p>No ratings available</p>
+            {% endif %}
+
+            <div class="meta-grid">
+
+                <div class="meta-card">
+                    <span class="meta-label">
+                        Publisher
+                    </span>
+
+                    <span class="meta-value">
+                        Penguin
+                    </span>
+                </div>
+
+                <div class="meta-card">
+                    <span class="meta-label">
+                        Published
+                    </span>
+
+                    <span class="meta-value">
+                        1998
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
     {% else %}
-        <p>No ratings available</p>
+    <p>Book not found.</p>
     {% endif %}
 
-{% else %}
-    <p>Book not found.</p>
-{% endif %}
 
-{% if exists %}
-  <h2>Recommended Books</h2>
 
-  {% for book in recommendations %}
-    <a href="/book/{{ book['Book-Title'] }}">
-        {{ book['Book-Title'] }}
-    </a>
+    <div class="start-section">
+        {% if exists %}
 
-    <p>{{ book['Book-Author'] }}</p>
+        <h2 class="section-title">Readers who enjoyed this also liked</h2>
+        <p class="section-sub"></p>
 
-    <img src="{{ book['Image-URL-L'] }}" 
-         alt="{{ book['Book-Title'] }}">
-  {% endfor %}
+        <div class="book-grid">
+            {% for book in recommendations %}
 
-{% else %}
-  <h2>You may also like</h2>
+            <a class="book" href="/book/{{ book['Book-Title']| urlencode }}">
 
-        {% for book in fallback_books %}
-            <a href="/book/{{ book['Book-Title'] }}">
-                {{ book['Book-Title'] }}
+                <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}"
+                    onerror="this.src='/static/images/fallback-book.png'"
+                    onload="if(this.naturalWidth < 20) this.src='/static/images/fallback-book.png'">
+                <div class="book-title">
+                    {{ book['Book-Title'][:32] }}
+                </div>
+                <div class="book-author">
+                    {{ book['Book-Author'] }}
+                </div>
             </a>
-            <p>{{ book['Book-Author'] }}</p>
-            <img src="{{ book['Image-URL-L'] }}">
-        {% endfor %}
-{% endif %}
+            {% endfor %}
+        </div>
+
+        {% else %}
+        <h2 class="section-title">You may also enjoy</h2>
+        <p class="section-sub"></p>
+        <div class="book-grid">
+            {% for book in fallback_books %}
+            <a class="book" href="/book/{{ book['Book-Title'] | urlencode}}">
+
+
+                <img src="{{ book['Image-URL-L'] }}" alt="{{ book['Book-Title'] }}"
+                    onerror="this.src='/static/images/fallback-book.png'"
+                    onload="if(this.naturalWidth < 20) this.src='/static/images/fallback-book.png'">
+                <div class="book-title">
+                    {{ book['Book-Title'][:32] }}
+                </div>
+                <div class="book-author">
+                    {{ book['Book-Author'] }}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
