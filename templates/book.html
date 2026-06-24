@@ -10,6 +10,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Manrope:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
         rel="stylesheet">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
     <link rel="stylesheet" href="/static/css/homepage.css">
     <link rel="stylesheet" href="/static/css/recommendation.css">
 
@@ -73,9 +76,9 @@
                     <span class="meta-label">
                         Publisher
                     </span>
-
+                        
                     <span class="meta-value">
-                        Penguin
+                        {{ book_details['Publisher'] }}
                     </span>
                 </div>
 
@@ -85,7 +88,7 @@
                     </span>
 
                     <span class="meta-value">
-                        1998
+                        {{ book_details['Year-Of-Publication'] }}
                     </span>
                 </div>
 
