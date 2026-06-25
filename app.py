@@ -148,7 +148,7 @@ def get_recommendations(book_name):
     scores = sorted(scores, key=lambda x: x[1], reverse=True)
 
     recommended_books = []
-    for i in scores[1:6]:  # to skip the same book clicked
+    for i in scores[1:11]:  # to skip the same book clicked
         book_title = pt.index[i[0]]
 
         book_data = books[books['Book-Title'] == book_title].iloc[0]

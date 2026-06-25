@@ -107,7 +107,7 @@
         {% if exists %}
 
         <h2 class="section-title">Readers who enjoyed this also liked</h2>
-        <p class="section-sub"></p>
+        <p class="section-sub">Recommendations based on reading patterns from similar readers.</p>
 
         <div class="book-grid">
             {% for book in recommendations %}
@@ -129,7 +129,7 @@
 
         {% else %}
         <h2 class="section-title">You may also enjoy</h2>
-        <p class="section-sub"></p>
+        <p class="section-sub">Curated from the same author and popular reader favorites.</p>
         <div class="book-grid">
             {% for book in fallback_books %}
             <a class="book" href="/book/{{ book['Book-Title'] | urlencode}}">
