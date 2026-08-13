@@ -11,6 +11,47 @@ A collaborative filtering based book recommendation web application that helps r
 * Fallback recommendations based on the same author and highly rated books
 * Handling of missing book covers
 
+## Application Preview
+
+### Homepage
+
+![NextRead Homepage](image.png)
+
+![Readers' Favourites](image-1.png)
+
+### Book Details & Recommendations
+
+![Book Details and Recommendations]!(image-4.png)
+
+### Fallback Recommendations
+![alt text](image-3.png)
+
+### Search Results
+
+![Search Results](screenshots/search-results.png)
+
+
+## Application Preview
+
+### Homepage
+
+![NextRead Homepage](screenshots/homepage.png)
+![Readers' Favourites](static/images/readers-fav.png)
+
+### Book Details & Recommendations
+
+![Book Details](static/images/book-details.png)
+![Recommendations for that book](static/images/book-recs.png)
+
+### Fallback Recommendations
+
+When a selected book does not have enough rating data for collaborative filtering, NextRead provides fallback recommendations based on the same author and popular reader favourites.
+
+![Fallback Recommendations](static/images/fallback-recommendations2.png)
+### Search Results
+
+![Search Results](static/images/search-results.png)
+
 ## Tech Stack
 
 * Flask
