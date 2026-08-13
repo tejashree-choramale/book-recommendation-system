@@ -15,27 +15,7 @@ A collaborative filtering based book recommendation web application that helps r
 
 ### Homepage
 
-![NextRead Homepage](image.png)
-
-![Readers' Favourites](image-1.png)
-
-### Book Details & Recommendations
-
-![Book Details and Recommendations]!(image-4.png)
-
-### Fallback Recommendations
-![alt text](image-3.png)
-
-### Search Results
-
-![Search Results](screenshots/search-results.png)
-
-
-## Application Preview
-
-### Homepage
-
-![NextRead Homepage](screenshots/homepage.png)
+![NextRead Homepage](static/images/homepage.png)
 ![Readers' Favourites](static/images/readers-fav.png)
 
 ### Book Details & Recommendations
